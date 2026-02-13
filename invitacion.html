@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invitación San Valentín</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff4e8b,#ff758c);
+font-family:'Poppins',sans-serif;
+overflow:hidden;
+}
+
+/* SOBRE */
+.envelope{
+width:360px;
+height:280px;
+background:#fff;
+position:relative;
+border-radius:15px;
+box-shadow:0 15px 40px rgba(0,0,0,.3);
+cursor:pointer;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+transition:.6s;
+animation:float 3s ease-in-out infinite;
+padding:20px;
+}
+.envelope:hover{transform:scale(1.05)}
+
+/* FOTO RECTANGULAR */
+.photo{
+width:220px;
+height:150px;
+border-radius:15px; /* rectangular con bordes suaves */
+object-fit:cover;
+border:4px solid #ff4e8b;
+box-shadow:0 10px 25px rgba(0,0,0,.3);
+margin-bottom:15px;
+animation:pulse 2s infinite;
+}
+
+.open-text{
+font-family:'Great Vibes',cursive;
+font-size:28px;
+color:#ff4e8b;
+animation:pulse 2s infinite;
+}
+
+.tulip{position:absolute;font-size:30px;animation:sway 4s ease-in-out infinite}
+.t1{left:-35px;bottom:-10px}
+.t2{right:-35px;bottom:-10px}
+@keyframes sway{0%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}100%{transform:rotate(-5deg)}}
+
+.dino{position:absolute;font-size:30px;animation:bounce 2s infinite}
+.d1{top:-35px;left:15px}
+.d2{top:-35px;right:15px}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+
+/* TARJETA */
+.card{
+display:none;
+background:white;
+width:90%;
+max-width:520px;
+padding:40px 30px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 15px 40px rgba(0,0,0,.2);
+animation:fadeIn 1.5s ease-in-out;
+position:relative;
+}
+
+h1{font-family:'Great Vibes',cursive;font-size:42px;color:#ff4e8b;margin-bottom:15px}
+.datos{margin:15px 0;font-size:16px;color:#444;line-height:1.6}
+.firma{margin-top:20px;font-weight:600;color:#ff4e8b}
+.buttons{display:flex;justify-content:center;gap:20px;margin-top:25px}
+button{padding:12px 25px;border:none;border-radius:30px;font-size:16px;cursor:pointer;transition:.3s;position:relative}
+.yes{background:#ff4e8b;color:white}
+.yes:hover{background:#e8437a;transform:scale(1.1)}
+.no{background:#ccc}
+
+/* EXPLOSION */
+.explosion{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+font-size:80px;
+opacity:0;
+transition:all .6s ease;
+}
+
+.explosion.active{
+transform:translate(-50%,-50%) scale(3);
+opacity:1;
+}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<audio id="music" preload="auto">
+  <source src="cancion.mp3" type="audio/mpeg">
+</audio>
+
+<div class="envelope" onclick="abrirCarta()">
+<img src="foto.jpg" class="photo" alt="Nosotros">
+<div class="open-text">Abrir 💌</div>
+<div class="tulip t1">🌷</div>
+<div class="tulip t2">🌷</div>
+<div class="dino d1">🦕</div>
+<div class="dino d2">🦖</div>
+</div>
+
+<div class="card" id="card">
+<h1>Guianella, ¿quieres ser mi San Valentín? 💖</h1>
+<div class="datos">
+<p><strong>Fecha:</strong> 14 de febrero</p>
+<p><strong>Hora:</strong> 6:30 PM</p>
+<p><strong>Lugar:</strong> San Miguel</p>
+</div>
+<p>Prometo una noche especial, llena de risas y momentos inolvidables ❤️</p>
+<div class="firma">Con cariño,<br>Álvaro Rodrigo Lopez Salazar 💌</div>
+<div class="buttons">
+<button class="yes" onclick="respuestaSi()">Sí 💕</button>
+<button class="no" id="noBtn" onmouseover="moverBoton()">No 😢</button>
+</div>
+<div class="explosion" id="boom">💥</div>
+</div>
+
+<script>
+function abrirCarta(){
+document.querySelector('.envelope').style.display='none';
+document.getElementById('card').style.display='block';
+}
+
+function respuestaSi(){
+const audio=document.getElementById("music");
+audio.volume=1.0;
+audio.play();
+
+let card=document.querySelector('.card');
+
+card.innerHTML=`
+<h1>¡Sabía que dirías que sí! 💘</h1>
+<p style='margin-top:15px;font-size:18px;'>Nos vemos el 14 de febrero a las 6:30 PM en San Miguel ❤️</p>
+<p style='margin-top:20px;font-weight:600;color:#ff4e8b;'>Te quiero mucho, Guianella 🌷🦕💕</p>
+<p style='margin-top:25px;font-weight:bold;color:#333;'>⚠ Esta carta se autodestruirá en <span id="count">10</span> segundos...</p>
+<div class='explosion' id='boom'>💥</div>
+`;
+
+let seconds=10;
+let interval=setInterval(()=>{
+seconds--;
+document.getElementById("count").innerText=seconds;
+if(seconds<=0){
+clearInterval(interval);
+let boom=document.getElementById("boom");
+boom.classList.add("active");
+setTimeout(()=>{
+card.innerHTML="<h1>😆 Era broma... Te amo ❤️</h1>";
+},800);
+}
+},1000);
+}
+
+function moverBoton(){
+const boton=document.getElementById('noBtn');
+const x=Math.random()*300-150;
+const y=Math.random()*200-100;
+boton.style.position='relative';
+boton.style.left=x+'px';
+boton.style.top=y+'px';
+}
+</script>
+
+</body>
+</html>
