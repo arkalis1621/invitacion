@@ -144,6 +144,12 @@ opacity:1;
 function abrirCarta(){
 document.querySelector('.envelope').style.display='none';
 document.getElementById('card').style.display='block';
+
+// Reproducir música desde el inicio (permitido porque hubo interacción)
+const audio = document.getElementById("music");
+audio.volume = 1.0;
+audio.loop = true;
+audio.play().catch(e => console.log("Autoplay bloqueado:", e));
 }
 
 function respuestaSi(){
